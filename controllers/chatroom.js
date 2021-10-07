@@ -53,7 +53,25 @@ export default {
       return res.status(500).json({ success: false, error: error })
     }
   },
-    getRecentConversation: async (req, res) => { },
+    getRoomByRoomName: async (req, res) => {
+      try {
+        const { chatroom } = req.params;
+        console.log("Me")
+        const room = await ChatRoomModel.getRoomByName(chatroom);
+        console.log("they")
+        if (!room) {
+          console.log("fail")
+          return res.status(400).json({
+            success: false,
+            message: 'This room does not exist',
+          })
+        }
+        console.log("pass")
+        return res.status(200).json({ success: true, room });
+      } catch (error) {
+        return res.status(500).json({ success: false, error: error })
+      }
+    },
     getConversationByRoomId: async (req, res) => {
       try {
         const { roomId } = req.params;

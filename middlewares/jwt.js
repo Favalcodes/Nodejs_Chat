@@ -1,16 +1,14 @@
 import jwt from 'jsonwebtoken';
-// models
-import UserModel from '../models/User.js';
 
 const SECRET_KEY = 'qwerty123456poiu0987!^@';
 
 export const encode = async (req, res, next) => {
   try {
-    const { userId } = req.params;
-    const user = await UserModel.getUserById(userId);
+    const { firstname, lastname, type } = req.body;
     const payload = {
-      userId: user._id,
-      userType: user.type,
+      firstname,
+      lastname,
+      type
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     console.log('Auth', authToken);

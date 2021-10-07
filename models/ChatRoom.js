@@ -53,6 +53,16 @@ chatRoomSchema.statics.initiateChat = async function (
   }
 }
 
+chatRoomSchema.statics.getRoomByName = async function (chatrooms) {
+  try {
+    const chatroomsRegex = new RegExp(chatrooms, 'i');
+    const rooms = await this.findOne({ roomName: chatroomsRegex });
+    return rooms;
+  } catch (error) {
+    throw error;
+  }
+}
+
 chatRoomSchema.statics.getChatRoomByRoomId = async function (roomId) {
   try {
     const room = await this.findOne({ _id: roomId });

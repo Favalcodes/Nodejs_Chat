@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     firstName: String,
     lastName: String,
-    email: String,
     type: String,
   },
   {
@@ -25,12 +24,11 @@ const userSchema = new mongoose.Schema(
 
 userSchema.statics.createUser = async function (
 	firstName, 
-    lastName,
-    email, 
-    type
+  lastName,
+  type
 ) {
   try {
-    const user = await this.create({ firstName, lastName, email, type });
+    const user = await this.create({ firstName, lastName, type });
     return user;
   } catch (error) {
     throw error;
@@ -41,16 +39,6 @@ userSchema.statics.getUserById = async function (id) {
     try {
       const user = await this.findOne({ _id: id });
       if (!user) throw ({ error: 'No user with this id found' });
-      return user;
-    } catch (error) {
-      throw error;
-    }
-}
-
-userSchema.statics.getUserByEmail = async function (email) {
-    try {
-      const user = await this.findOne({ email: email });
-      if (!user) throw ({ error: 'No user with this email found' });
       return user;
     } catch (error) {
       throw error;
