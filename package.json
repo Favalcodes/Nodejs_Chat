@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon server/index.js",
-	  "start:server": "node server/index.js"
+    "start:server": "node server/index.js"
   },
   "repository": {
     "type": "git",
