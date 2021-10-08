@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.firstpage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #120F13;
+    color: #fff;
+}
+.login{
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 20px;
+}

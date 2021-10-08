@@ -3,6 +3,7 @@ import express from "express";
 import logger from "morgan";
 import cors from "cors";
 import { Server } from "socket.io";
+import bodyParser from "body-parser";
 
 // Mongodb
 import '../config/mongo.js'
@@ -23,10 +24,19 @@ const app = express();
 const port = process.env.PORT || "3000";
 app.set("port", port);
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false}))
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
 
+app.get('/', (req, res) => {
+  res.render('../views/index')
+})
+app.get('/welcome', (req, res) => {
+  res.render('../views/channels')
+})
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/room", decode, chatRoomRouter);

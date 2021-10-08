@@ -27,14 +27,15 @@ export default {
           checks: {
             firstName: { type: types.string },
             lastName: { type: types.string },
+            email: { type: types.string },
             type: { type: types.enum, options: { enum: USER_TYPES } },
           }
         }));
         if (!validation.success) return res.status(400).json(validation);
   
   
-        const { firstName, lastName, type } = req.body;
-        const user = await UserModel.createUser(firstName, lastName, type);
+        const { firstName, lastName, email, type } = req.body;
+        const user = await UserModel.createUser(firstName, lastName, email, type);
         return res.status(200).json({ success: true, user, authorization: req.authToken });
       } catch (error) {
         return res.status(500).json({ success: false, error: error })

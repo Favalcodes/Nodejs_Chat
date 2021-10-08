@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <title>Chatty</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body{
+        font-family: 'Noto Sans', sans-serif;
+        font-size: 18px;
+    }
+    .firstpage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #120F13;
+        color: #fff;
+        height: 100vh;
+    }
+    .register{
+        border: 2px solid #fff;
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 100px;
+    }
+    .login{
+        border: 2px solid #fff;
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    h2, h4{
+        margin-bottom: 10px;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .form-control{
+        width: 100%;
+        height: 40px;
+        margin: 5px 0;
+        padding: 0 10px;
+        font-size: inherit;
+    }
+    .btn-submit{
+        margin-top: 10px;
+        background-color: #fff;
+        color: #120F13;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: inherit;
+    }
+</style>
+<body>
+    <div class="firstpage">
+        <div class="register">
+            <h2>Welcome</h2>
+            <h4>Please Register</h4>
+            <form action="/welcome" method="POST">
+                <input type="email" name="email" id="email" placeholder="Email" class="form-control" required>
+                <input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" required>
+                <input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" required>
+                <input type="text" name="type" id="type" value="enduser" hidden>
+                <button class="btn-submit" type="submit">Enter <i class="fa fa-arrow-right"></i></button>
+            </form>
+        </div>
+        <div class="login">
+            <h2>Welcome Back</h2>
+            <h4>Please Login</h4>
+            <form action='/login' method="POST">
+                <input type="email" name="userId" id="userId" placeholder="Email" class="form-control" required>
+                <button class="btn-submit" type="submit">Enter <i class="fa fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

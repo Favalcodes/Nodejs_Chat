@@ -1,19 +1,49 @@
 import jwt from 'jsonwebtoken';
+import UserModel from '../models/User.js'
 
 const SECRET_KEY = 'qwerty123456poiu0987!^@';
 
 export const encode = async (req, res, next) => {
   try {
-    const { firstname, lastname, type } = req.body;
+    const { firstname, lastname, email, type } = req.body;
+    const user = await UserModel.getUserByEmail(email);
+    if(user) {
+      throw ({ 
+        error: "Email already exist"
+      })
+    } else {
+      const payload = {
+        firstname,
+        lastname,
+        email,
+        type
+      };
+      const authToken = jwt.sign(payload, SECRET_KEY);
+      console.log('Auth', authToken);
+      req.authToken = authToken;
+      next();
+    }
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.error });
+  }
+}
+
+export const logencode = async (req, res, next) => {
+  try {
+    const { userId } = req.body;
+    const user = await UserModel.getUserByEmail(userId);
+    if (!user) {
+      throw ({ error: 'No user with this email found' });
+    } else {
     const payload = {
-      firstname,
-      lastname,
-      type
+      userId: user.email,
+      userType: user.type,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     console.log('Auth', authToken);
     req.authToken = authToken;
     next();
+  }
   } catch (error) {
     return res.status(400).json({ success: false, message: error.error });
   }

@@ -2,13 +2,13 @@ import express from 'express';
 // controllers
 import user from '../controllers/user.js';
 // middlewares
-import { encode } from '../middlewares/jwt.js';
+import { encode, logencode } from '../middlewares/jwt.js';
 
 const router = express.Router();
 
 router
-.post('/', encode, user.onCreateUser)
-.post('/login/:userId', encode, (req, res, next) => {
+.post('/welcome', encode, user.onCreateUser)
+.post('/login', logencode, (req, res, next) => {
   return res
     .status(200)
     .json({
