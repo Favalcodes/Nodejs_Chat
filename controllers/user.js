@@ -1,7 +1,7 @@
 // utils
 import makeValidation from '@withvoid/make-validation';
 // models
-import UserModel, { USER_TYPES } from '../models/User.js';
+import UserModel from '../models/User.js';
 
 export default {
   onGetAllUsers: async (req, res) => {
@@ -20,6 +20,15 @@ export default {
         return res.status(500).json({ success: false, error: error })
       }
     },
+    onGetUserByEmail: async (req, res) => {
+      try {
+        const user = await UserModel.getUserByEmail(req.params.email);
+        if (!user) throw ({ error: 'No user with this email found' });
+        return res.status(200).json({ success: true, user });
+      } catch (error) {
+        return res.status(500).json({ success: false, error: error })
+      }
+    },
     onCreateUser: async (req, res) => {
       try {
         const validation = makeValidation(types => ({
@@ -27,26 +36,25 @@ export default {
           checks: {
             firstName: { type: types.string },
             lastName: { type: types.string },
-            email: { type: types.string },
-            type: { type: types.enum, options: { enum: USER_TYPES } },
+            email: { type: types.string }
           }
         }));
         if (!validation.success) return res.status(400).json(validation);
   
   
-        const { firstName, lastName, email, type } = req.body;
-        const user = await UserModel.createUser(firstName, lastName, email, type);
-        return res.redirect('/welcome').status(200).json({ success: true, user, authorization: req.authToken });
+        const { firstName, lastName, email } = req.body;
+        const user = await UserModel.createUser(firstName, lastName, email);
+        return res.status(200).json({ success: true, user, authorization: req.authToken });
       } catch (error) {
         return res.status(500).json({ success: false, error: error })
       }
     },
-    onDeleteUserById: async (req, res) => {
+    onDeleteUserByEmail: async (req, res) => {
       try {
-        const user = await UserModel.deleteByUserById(req.params.id);
+        const user = await UserModel.deleteByUserByEmail(req.params.email);
         return res.status(200).json({ 
           success: true, 
-          message: `Deleted a count of ${user.deletedCount} user.` 
+          message: `User Deleted.` 
         });
       } catch (error) {
         return res.status(500).json({ success: false, error: error })

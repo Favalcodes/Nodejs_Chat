@@ -5,7 +5,7 @@ const SECRET_KEY = 'qwerty123456poiu0987!^@';
 
 export const encode = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, type } = req.body;
+    const { firstname, lastname, email } = req.body;
     const user = await UserModel.getUserByEmail(email);
     if(user) {
       throw ({ 
@@ -15,8 +15,7 @@ export const encode = async (req, res, next) => {
       const payload = {
         firstname,
         lastname,
-        email,
-        type
+        email
       };
       const authToken = jwt.sign(payload, SECRET_KEY);
       console.log('Auth', authToken);
@@ -36,8 +35,7 @@ export const logencode = async (req, res, next) => {
       throw ({ error: 'No user with this email found' });
     } else {
     const payload = {
-      userId: user.email,
-      userType: user.type,
+      userId: user.email
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     console.log('Auth', authToken);
@@ -57,7 +55,6 @@ export const decode = (req, res, next) => {
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
     req.userId = decoded.userId;
-    req.userType = decoded.type;
     return next();
   } catch (error) {
 

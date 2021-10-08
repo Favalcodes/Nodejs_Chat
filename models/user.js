@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
-export const USER_TYPES = {
-  ENDUSER: "enduser",
-  ADMIN: "admin",
-};
-
 const userSchema = new mongoose.Schema(
   {
     _id: {
@@ -14,7 +9,7 @@ const userSchema = new mongoose.Schema(
     },
     firstName: String,
     lastName: String,
-    type: String,
+    email: String,
   },
   {
     timestamps: true,
@@ -25,10 +20,10 @@ const userSchema = new mongoose.Schema(
 userSchema.statics.createUser = async function (
 	firstName, 
   lastName,
-  type
+  email
 ) {
   try {
-    const user = await this.create({ firstName, lastName, type });
+    const user = await this.create({ firstName, lastName, email });
     return user;
   } catch (error) {
     throw error;
@@ -45,6 +40,15 @@ userSchema.statics.getUserById = async function (id) {
     }
 }
 
+userSchema.statics.getUserByEmail = async function (userId) {
+    try {
+      const user = await this.findOne({ email: userId });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+}
+
 userSchema.statics.getUsers = async function () {
     try {
       const users = await this.find();
@@ -54,18 +58,19 @@ userSchema.statics.getUsers = async function () {
     }
 }
 
-userSchema.statics.getUserByIds = async function (ids) {
+userSchema.statics.getUserByIds = async function (userIds) {
   try {
-    const users = await this.find({ _id: { $in: ids } });
+    const users = await this.find({ _id: { $in: userIds } });
+    if (!users) throw ({ error: "user doesn't exist" });
     return users;
   } catch (error) {
     throw error;
   }
 }
 
-userSchema.statics.deleteByUserById = async function (id) {
+userSchema.statics.deleteByUserByEmail = async function (email) {
     try {
-      const result = await this.remove({ _id: id });
+      const result = await this.remove({ email: email });
       return result;
     } catch (error) {
       throw error;

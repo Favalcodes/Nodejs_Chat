@@ -5,7 +5,7 @@ import chatRoom from '../controllers/chatroom.js';
 const router = express.Router();
 
 router
-  // .get('/', chatRoom.getRecentConversation)
+  .get('/:roomName/users', chatRoom.getRoomUsers)
   .get('/:roomId', chatRoom.getConversationByRoomId)
   .get('/search/:chatroom', chatRoom.getRoomByRoomName)
   .post('/initiate', chatRoom.initiate)

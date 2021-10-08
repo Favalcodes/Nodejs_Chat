@@ -118,7 +118,7 @@ chatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, 
           $lookup: {
             from: 'users',
             localField: 'postedByUser',
-            foreignField: '_id',
+            foreignField: 'email',
             as: 'postedByUser',
           }
         },

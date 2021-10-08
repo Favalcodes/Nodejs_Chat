@@ -1,7 +1,7 @@
 // utils
 import makeValidation from '@withvoid/make-validation';
 // models
-import ChatRoomModel, { CHAT_ROOM_TYPES } from '../models/ChatRoom.js';
+import ChatRoomModel from '../models/ChatRoom.js';
 import ChatMessageModel from '../models/ChatMessage.js';
 import UserModel from '../models/User.js';
 
@@ -17,15 +17,14 @@ export default {
           },
           roomName: { type: types.string, empty: false, stringOnly: true},
           description: { type: types.string, empty: false, stringOnly: true},
-          type: { type: types.enum, options: { enum: CHAT_ROOM_TYPES } },
         }
       }));
       if (!validation.success) return res.status(400).json({ ...validation });
   
-      const { userIds, roomName, description, type } = req.body;
+      const { userIds, roomName, description } = req.body;
       const { userId: chatInitiator } = req;
       const allUserIds = [...userIds, chatInitiator];
-      const chatRoom = await ChatRoomModel.initiateChat(allUserIds, roomName, description, type, chatInitiator);
+      const chatRoom = await ChatRoomModel.initiateChat(allUserIds, roomName, description, chatInitiator);
       return res.status(200).json({ success: true, chatRoom });
     } catch (error) {
       return res.status(500).json({ success: false, error: error })
@@ -76,6 +75,23 @@ export default {
         return res.status(500).json({ success: false, error: error })
       }
     },
+    getRoomUsers: async (req, res) => {
+      try{
+        const { roomName } = req.params;
+        const room = await ChatRoomModel.getRoomByName(roomName)
+        console.log(room)
+        if (!room) {
+          return res.status(400).json({
+            success: false,
+            message: 'No room exists for this name',
+          })
+        }
+        const users = await UserModel.getUserByEmail(room.userIds);
+        return res.status(200).json({ success: true, users})
+      } catch (error) {
+        return res.status(500).json({ success: false, error: error})
+      }
+    },
     getConversationByRoomId: async (req, res) => {
       try {
         const { roomId } = req.params;
@@ -86,7 +102,7 @@ export default {
             message: 'No room exists for this id',
           })
         }
-        const users = await UserModel.getUserByIds(room.userIds);
+        const users = await UserModel.getUserByEmail(room.userIds);
         const options = {
           page: parseInt(req.query.page) || 0,
           limit: parseInt(req.query.limit) || 10,
