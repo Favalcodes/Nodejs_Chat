@@ -10,6 +10,9 @@ import '../config/mongo.js'
 
 import webSocket from "../utils/webSocket.js";
 
+// controller
+import chatroom from '../controllers/chatroom.js'
+
 // routes
 import indexRouter from "../routes/index.js";
 import userRouter from "../routes/user.js";
@@ -34,9 +37,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
   res.render('../views/index')
 })
-app.get('/welcome', (req, res) => {
-  res.render('../views/channels')
-})
+app.get('/welcome', chatroom.getAllRooms)
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/room", decode, chatRoomRouter);

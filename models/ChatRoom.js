@@ -53,6 +53,15 @@ chatRoomSchema.statics.initiateChat = async function (
   }
 }
 
+chatRoomSchema.statics.getRooms = async function () {
+    try {
+      const rooms = await this.find();
+      return rooms;
+    } catch (error) {
+      throw error;
+    }
+}
+
 chatRoomSchema.statics.getRoomByName = async function (chatrooms) {
   try {
     const chatroomsRegex = new RegExp(chatrooms, 'i');

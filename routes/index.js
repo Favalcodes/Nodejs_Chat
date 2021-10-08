@@ -1,3 +1,4 @@
+import { render } from 'ejs';
 import express from 'express';
 // controllers
 import user from '../controllers/user.js';
@@ -10,6 +11,7 @@ router
 .post('/welcome', encode, user.onCreateUser)
 .post('/login', logencode, (req, res, next) => {
   return res
+    .redirect('/welcome')
     .status(200)
     .json({
       success: true,

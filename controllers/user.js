@@ -36,7 +36,7 @@ export default {
   
         const { firstName, lastName, email, type } = req.body;
         const user = await UserModel.createUser(firstName, lastName, email, type);
-        return res.status(200).json({ success: true, user, authorization: req.authToken });
+        return res.redirect('/welcome').status(200).json({ success: true, user, authorization: req.authToken });
       } catch (error) {
         return res.status(500).json({ success: false, error: error })
       }

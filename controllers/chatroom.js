@@ -56,18 +56,22 @@ export default {
     getRoomByRoomName: async (req, res) => {
       try {
         const { chatroom } = req.params;
-        console.log("Me")
         const room = await ChatRoomModel.getRoomByName(chatroom);
-        console.log("they")
         if (!room) {
-          console.log("fail")
           return res.status(400).json({
             success: false,
             message: 'This room does not exist',
           })
         }
-        console.log("pass")
         return res.status(200).json({ success: true, room });
+      } catch (error) {
+        return res.status(500).json({ success: false, error: error })
+      }
+    },
+    getAllRooms: async (req, res) => {
+      try {
+        const rooms = await ChatRoomModel.getRooms();
+        return res.status(200).json({ success: true, rooms });
       } catch (error) {
         return res.status(500).json({ success: false, error: error })
       }
@@ -112,7 +116,6 @@ export default {
         const result = await ChatMessageModel.markMessageRead(roomId, currentLoggedUser);
         return res.status(200).json({ success: true, data: result });
       } catch (error) {
-        console.log(error);
         return res.status(500).json({ success: false, error });
       }
     },
