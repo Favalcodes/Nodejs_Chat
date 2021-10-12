@@ -49,10 +49,7 @@ chatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
       readByRecipients: { readByUserId: postedByUser }
     });
     const aggregate = await this.aggregate([
-      // get post where _id = post._id
       { $match: { _id: post._id } },
-      // do a join on another table called users, and 
-      // get me a user whose _id = postedByUser
       {
         $lookup: {
           from: 'users',
@@ -62,8 +59,6 @@ chatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
         }
       },
       { $unwind: '$postedByUser' },
-      // do a join on another table called chatrooms, and 
-      // get me a chatroom whose _id = chatRoomId
       {
         $lookup: {
           from: 'chatrooms',
@@ -74,8 +69,6 @@ chatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
       },
       { $unwind: '$chatRoomInfo' },
       { $unwind: '$chatRoomInfo.userIds' },
-      // do a join on another table called users, and 
-      // get me a user whose _id = userIds
       {
         $lookup: {
           from: 'users',
@@ -85,7 +78,6 @@ chatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
         }
       },
       { $unwind: '$chatRoomInfo.userProfile' },
-      // group data
       {
         $group: {
           _id: '$chatRoomInfo._id',
@@ -112,8 +104,6 @@ chatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, 
       return this.aggregate([
         { $match: { chatRoomId } },
         { $sort: { createdAt: -1 } },
-        // do a join on another table called users, and 
-        // get me a user whose _id = postedByUser
         {
           $lookup: {
             from: 'users',
@@ -123,7 +113,6 @@ chatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, 
           }
         },
         { $unwind: "$postedByUser" },
-        // apply pagination
         { $skip: options.page * options.limit },
         { $limit: options.limit },
         { $sort: { createdAt: 1 } },

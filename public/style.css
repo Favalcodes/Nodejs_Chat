@@ -1,17 +1,246 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.firstpage{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #120F13;
+body {
+  font-family: "Noto Sans", sans-serif;
+  margin: 0;
+  background: #252329;
+  color: #fff;
+}
+.firstpage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #120f13;
+  color: #fff;
+  height: 100vh;
+}
+.register {
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 100px;
+}
+.login {
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h2,
+h4 {
+  margin-bottom: 10px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.form-control {
+  width: 100%;
+  height: 40px;
+  margin: 5px 0;
+  padding: 0 10px;
+  font-size: inherit;
+}
+.btn-submit {
+  margin-top: 10px;
+  background-color: #fff;
+  color: #120f13;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: inherit;
+}
+.mobile-nav {
+  display: none;
+}
+.main {
+  display: flex;
+}
+.sidenav {
+  width: 324px;
+  background: #120f13;
+  height: 100vh;
+  position: fixed;
+}
+.title {
+  width: 100%;
+  background: inherit;
+  height: 59.45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 20px 32px;
+}
+h4 {
+  font-family: 700;
+  font-size: 18px;
+}
+.btn-plus {
+  width: 32px;
+  height: 32px;
+  background: #252329;
+  color: inherit;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+}
+.sidebody {
+  background: transparent;
+  padding: 0 32px;
+}
+.search {
+  width: 100%;
+  background: #3c393f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.btn-search {
+  background: transparent;
+  border: none;
+  color: inherit;
+}
+.input {
+  width: 90%;
+  background: transparent;
+  border: none;
+  padding-left: 8px;
+  color: inherit;
+}
+.input:focus {
+  outline: none;
+}
+.body {
+  margin-left: 324px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  color: inherit;
+  width: 100%;
+  height: 100vh;
+}
+h4 .fa-angle-left{
+    font-weight: 700;
+    font-size: 18px;
+    margin-right: 23px;
+}
+.channels {
+  margin-top: 34px;
+}
+.link{
     color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-decoration: none;
 }
-.login{
-    border: 2px solid #fff;
-    border-radius: 8px;
-    padding: 20px;
+.link:hover{
+    text-decoration: none;
+    color: inherit;
+}
+.sidefooter{
+    background: #0B090C;
+    padding: 23px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 324px;
+}
+.bodyfooter{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 324px;
+    width: 100%;
+}
+#message{
+    position: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: block;
+  }
+  .sidebar {
+    position: fixed;
+    width: 250px;
+    top: 0;
+    left: -265px;
+    bottom: 0;
+    background: #111;
+    padding-top: 50px;
+    transition: 0.4s;
+    height: 85%;
+    margin: auto 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .sidebar h1 {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-family: "Rubik";
+    font-weight: 400;
+    margin: 0;
+    font-size: 20px;
+  }
+  .sidebar a {
+    display: block;
+    padding: 10px 20px;
+    color: #bbb;
+    text-decoration: none;
+    font-family: "Rubik";
+    letter-spacing: 2px;
+  }
+  .sidebar a:hover {
+    color: #fff;
+    margin-left: 20px;
+    transition: 0.4s;
+  }
+  button {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    background: #111;
+    padding: 10px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  button span {
+    height: 3px;
+    width: 20px;
+    display: block;
+    margin: 6px;
+    background: #fff;
+  }
+  .show {
+    left: 0;
+  }
 }
