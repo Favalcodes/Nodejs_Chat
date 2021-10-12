@@ -34,7 +34,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.render("../views/index.html")
+  res.render("../views/index")
 })
 app.get('/welcome', chatroom.getAllRooms)
 app.use("/", indexRouter);
